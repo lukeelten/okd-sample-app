@@ -17,7 +17,7 @@ public class MyLivenessCheck implements HealthCheck {
     @RegistryType(type = MetricRegistry.Type.APPLICATION)
     MetricRegistry metricRegistry;
 
-    private final WaitHelper helper = new WaitHelper("liveness", "ready");
+    private final WaitHelper helper = new WaitHelper("liveness", "alive");
 
     @Override
     public HealthCheckResponse call() {

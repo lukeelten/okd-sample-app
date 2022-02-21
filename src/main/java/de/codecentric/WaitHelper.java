@@ -9,7 +9,6 @@ public class WaitHelper implements HealthCheck {
     private static final Logger logger = Logger.getLogger(WaitHelper.class);
 
     private final int waitTime;
-    private final int initialDelay;
 
     private final Instant successAfter;
     private final String response;
@@ -27,6 +26,7 @@ public class WaitHelper implements HealthCheck {
             waitTime = 0;
         }
 
+        int initialDelay;
         if (delay != null && !delay.isBlank()) {
             initialDelay = Integer.parseInt(delay);
         } else {

@@ -43,6 +43,18 @@ public class GreetingResource {
     @GET
     @Path("/id")
     @Produces(MediaType.TEXT_PLAIN)
+    @Timed(
+            name = "id_timer",
+            description = "description"
+    )
+    @Counted(
+            name = "id_counter",
+            description = "description"
+    )
+    @Metered(
+            name = "id_meter",
+            description = "description"
+    )
     public String id() {
         String hostname = System.getenv("HOSTNAME");
         String namespace = getNamespace();

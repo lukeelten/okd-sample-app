@@ -4,11 +4,15 @@ USER root
 RUN mkdir -p /app
 WORKDIR /app
 
+# Nur die pom datei kopieren
+COPY pom.xml pom.xml
+
+# Die meisten dependencies werden hier schon vorgeladen
+RUN mvn dependency:copy-dependencies
+
 COPY . .
 
-RUN mvn compile
-
-RUN mvn test
+RUN mvn compile test
 
 RUN mvn package
 
