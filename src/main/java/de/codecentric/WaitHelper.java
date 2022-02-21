@@ -18,7 +18,7 @@ public class WaitHelper implements HealthCheck {
         prefix = prefix.toUpperCase();
 
         String wait = System.getenv(prefix + "_WAIT_SECONDS");
-        String delay = System.getenv(prefix + "DELAY_SECONDS");
+        String delay = System.getenv(prefix + "_DELAY_SECONDS");
 
         if (wait != null && !wait.isBlank()) {
             waitTime = Integer.parseInt(wait);
