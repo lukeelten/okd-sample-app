@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Path("/")
@@ -80,6 +81,77 @@ public class GreetingResource {
         String namespace = getNamespace();
         return namespace + '/' + hostname;
     }
+
+    @GET
+    @Path("/memory")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Timed(
+            name = "memory_timer",
+            description = "description"
+    )
+    @Counted(
+            name = "memory_counter",
+            description = "description"
+    )
+    @Metered(
+            name = "memory_meter",
+            description = "description"
+    )
+    public String memory() {
+        List<String> l = new LinkedList<>();
+        for (int i = 0; i < 1000000; i++) {
+            String t = "Test " + Integer.toString(i);
+            l.add(t);
+        }
+
+        l.sort(Comparator.naturalOrder());
+
+        return l.get(0);
+    }
+
+    @GET
+    @Path("/compute")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Timed(
+            name = "compute_timer",
+            description = "description"
+    )
+    @Counted(
+            name = "compute_counter",
+            description = "description"
+    )
+    @Metered(
+            name = "compute_meter",
+            description = "description"
+    )
+    public String compute() {
+        Random random = new Random();
+        int i = random.nextInt() * 278952125;
+        i %= 1000000;
+
+        List<Integer> primes = sieveOfEratosthenes(i);
+        return "Prime " + primes.get(5);
+    }
+
+    private static List<Integer> sieveOfEratosthenes(int n) {
+        boolean prime[] = new boolean[n + 1];
+        Arrays.fill(prime, true);
+        for (int p = 2; p * p <= n; p++) {
+            if (prime[p]) {
+                for (int i = p * 2; i <= n; i += p) {
+                    prime[i] = false;
+                }
+            }
+        }
+        List<Integer> primeNumbers = new LinkedList<>();
+        for (int i = 2; i <= n; i++) {
+            if (prime[i]) {
+                primeNumbers.add(i);
+            }
+        }
+        return primeNumbers;
+    }
+
 
     @GET()
     @Path("/files/")

@@ -1,0 +1,12 @@
+resources:
+- deployment.yaml
+- service.yaml
+- route.yaml
+
+commonLabels:
+  app: okd-sample-app
+
+images:
+- name: okd-sample-app
+  newName: quay.io/lukeelten/okd-sample-app
+  newTag: latest
